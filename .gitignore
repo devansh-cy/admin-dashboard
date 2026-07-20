@@ -26,3 +26,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
+# Specification / Documentation Markdown Files
+/auth system.md
+/implementation.md
+/markdown file.md
+/real-time notfiy.md
