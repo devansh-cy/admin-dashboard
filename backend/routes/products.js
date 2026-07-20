@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
 // POST create product
 router.post('/', verifyToken, isAdmin, async (req, res) => {
   try {
-    const { name, category, price, description, images, threeSixtyImages } = req.body;
+    const { name, category, price, description, images, threeSixtyImages, specifications } = req.body;
     
     if (!name || !category || price === undefined) {
       return res.status(400).json({ success: false, message: 'Name, category, and price are required' });
@@ -41,7 +41,8 @@ router.post('/', verifyToken, isAdmin, async (req, res) => {
       price,
       description,
       images,
-      threeSixtyImages
+      threeSixtyImages,
+      specifications
     });
 
     await product.save();
@@ -54,7 +55,7 @@ router.post('/', verifyToken, isAdmin, async (req, res) => {
 // PUT update product
 router.put('/:id', verifyToken, isAdmin, async (req, res) => {
   try {
-    const { name, category, price, description, images, threeSixtyImages } = req.body;
+    const { name, category, price, description, images, threeSixtyImages, specifications } = req.body;
     
     const product = await Product.findById(req.params.id);
     if (!product) {
@@ -67,6 +68,7 @@ router.put('/:id', verifyToken, isAdmin, async (req, res) => {
     if (description !== undefined) product.description = description;
     if (images !== undefined) product.images = images;
     if (threeSixtyImages !== undefined) product.threeSixtyImages = threeSixtyImages;
+    if (specifications !== undefined) product.specifications = specifications;
 
     await product.save();
     res.json({ success: true, data: product });
