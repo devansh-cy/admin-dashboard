@@ -1,0 +1,161 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  margin-left: 220px;
+  background: var(--bg-off);
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.headerRow h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.addButton {
+  padding: 10px 20px;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.addButton:hover {
+  background: var(--primary-dark);
+}
+
+.filtersBar {
+  margin-bottom: 25px;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  background: var(--bg-white);
+  color: var(--text-dark);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.tableContainer {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 25px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.table thead {
+  background: var(--bg-light);
+}
+
+.table th {
+  padding: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.table td {
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-medium);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover {
+  background: var(--bg-off);
+}
+
+.productName {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.editButton {
+  padding: 6px 12px;
+  background: var(--bg-light);
+  color: var(--primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editButton:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.deleteButton {
+  padding: 6px 12px;
+  background: var(--bg-light);
+  color: #DC3545;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteButton:hover {
+  background: #DC3545;
+  color: #ffffff;
+  border-color: #DC3545;
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 70px;
+    padding: 15px;
+  }
+}
