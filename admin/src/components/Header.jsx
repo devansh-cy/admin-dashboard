@@ -30,12 +30,7 @@ export default function Header({ toggleMobileSidebar }) {
           </button>
         )}
         <Link to="/dashboard" className={styles.logoLink}>
-          <div className={styles.logoIcon}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-              <circle cx="12" cy="12" r="9" strokeOpacity="0.3" />
-            </svg>
-          </div>
+          <img src="/logo.png" alt="Climate Control System India Logo" className={styles.logoImage} />
           <div className={styles.brandText}>
             <span className={styles.logoTitle}>Climate Control System <span className={styles.country}>India</span></span>
           </div>

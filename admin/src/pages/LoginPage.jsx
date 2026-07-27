@@ -47,12 +47,7 @@ export default function LoginPage() {
       <div className={styles.bgGlow}></div>
       <div className={styles.loginBox}>
         <div className={styles.logoContainer}>
-          <div className={styles.logoIcon}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-              <circle cx="12" cy="12" r="9" strokeOpacity="0.3" />
-            </svg>
-          </div>
+          <img src="/logo.png" alt="Climate Control System India Logo" className={styles.logoImage} />
           <div className={styles.brandTitleGroup}>
             <span className={styles.logoText}>Climate Control System <span className={styles.accentText}>India</span></span>
           </div>

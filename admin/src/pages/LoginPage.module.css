@@ -41,15 +41,13 @@
   margin-bottom: 20px;
 }
 
-.logoIcon {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+.logoImage {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  background: #FFFFFF;
+  padding: 4px;
   border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
   box-shadow: 0 4px 14px rgba(0, 87, 184, 0.4);
   flex-shrink: 0;
 }

@@ -39,21 +39,15 @@
   gap: 12px;
 }
 
-.logoIcon {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
-  box-shadow: 0 4px 10px rgba(0, 87, 184, 0.25);
+.logoImage {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
   transition: var(--transition);
 }
 
-.logoLink:hover .logoIcon {
-  transform: rotate(-5deg) scale(1.04);
+.logoLink:hover .logoImage {
+  transform: scale(1.05);
 }
 
 .brandText {
