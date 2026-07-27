@@ -212,7 +212,7 @@ export default function InquiryDetail() {
 
                 {inquiry.productName && (
                   <div className={styles.detailField}>
-                    <span className={styles.fieldLabel}>HVAC Product Unit</span>
+                    <span className={styles.fieldLabel}>Product Unit</span>
                     <span className={styles.fieldValueHighlight}>{inquiry.productName}</span>
                   </div>
                 )}

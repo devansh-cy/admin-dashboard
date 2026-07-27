@@ -37,8 +37,7 @@ export default function Header({ toggleMobileSidebar }) {
             </svg>
           </div>
           <div className={styles.brandText}>
-            <span className={styles.logoTitle}>ClimateControl <span className={styles.country}>India</span></span>
-            <span className={styles.logoSubtitle}>HVAC & Environmental Admin</span>
+            <span className={styles.logoTitle}>Climate Control System <span className={styles.country}>India</span></span>
           </div>
         </Link>
       </div>

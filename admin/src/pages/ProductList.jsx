@@ -70,14 +70,14 @@ export default function ProductList() {
           {/* Header Row */}
           <div className={styles.headerRow}>
             <div>
-              <h1 className={styles.pageTitle}>HVAC Product Catalog</h1>
-              <p className={styles.pageSubtitle}>Manage climate control systems, chillers, AHUs, and thermal equipment</p>
+              <h1 className={styles.pageTitle}>Product Catalog</h1>
+              <p className={styles.pageSubtitle}>Manage climate control systems and products</p>
             </div>
             <button
               onClick={() => navigate('/products/new')}
               className={styles.addButton}
             >
-              + Add New HVAC Unit
+              + Add New Product
             </button>
           </div>
 
@@ -90,7 +90,7 @@ export default function ProductList() {
               </svg>
               <input
                 type="text"
-                placeholder="Search HVAC equipment by name or specs..."
+                placeholder="Search products by name or category..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className={styles.searchInput}
@@ -225,7 +225,7 @@ export default function ProductList() {
                             {product.images && product.images.length > 0 ? (
                               <img src={product.images[0]} alt={product.name} className={styles.tableThumb} />
                             ) : (
-                              <div className={styles.tableThumbPlaceholder}>HVAC</div>
+                              <div className={styles.tableThumbPlaceholder}>ITEM</div>
                             )}
                             <span className={styles.productName}>{product.name}</span>
                           </div>

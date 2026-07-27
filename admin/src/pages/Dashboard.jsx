@@ -183,7 +183,7 @@ export default function Dashboard() {
             <div className={styles.sectionHeader}>
               <div>
                 <h2>Recent Customer Inquiries</h2>
-                <p className={styles.sectionSub}>Latest environmental & HVAC customer communications</p>
+                <p className={styles.sectionSub}>Latest customer communications and inquiry logs</p>
               </div>
               <button onClick={() => navigate('/inquiries')} className={styles.linkBtn}>
                 View All →

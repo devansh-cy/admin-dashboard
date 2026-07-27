@@ -195,7 +195,7 @@ export default function ProductForm() {
         <div className={styles.content}>
           <div className={styles.formCard}>
             <div className={styles.headerRow}>
-              <h1>{isEditMode ? 'Edit HVAC Product' : 'Add New HVAC Product'}</h1>
+              <h1>{isEditMode ? 'Edit Product' : 'Add New Product'}</h1>
               <button
                 type="button"
                 onClick={() => navigate('/products')}
@@ -258,7 +258,7 @@ export default function ProductForm() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className={styles.textarea}
-                    placeholder="Detailed HVAC unit description and specifications..."
+                    placeholder="Detailed product description and specifications..."
                     rows={4}
                   />
                 </div>
@@ -294,7 +294,7 @@ export default function ProductForm() {
               {/* Specifications Collapsible Section */}
               <div className={styles.section}>
                 <div className={styles.specsHeader} onClick={() => setShowSpecs(!showSpecs)}>
-                  <h2>Technical HVAC Specifications</h2>
+                  <h2>Technical Specifications</h2>
                   <button type="button" className={styles.toggleBtn}>
                     {showSpecs ? '▲ Hide Specs' : '▼ Expand Specs'}
                   </button>
@@ -432,7 +432,7 @@ export default function ProductForm() {
 
               <div className={styles.actions}>
                 <button type="submit" disabled={loading} className={styles.submitButton}>
-                  {loading ? 'Saving...' : 'Save HVAC Product'}
+                  {loading ? 'Saving...' : 'Save Product'}
                 </button>
                 <button
                   type="button"

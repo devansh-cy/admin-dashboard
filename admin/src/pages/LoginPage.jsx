@@ -54,8 +54,7 @@ export default function LoginPage() {
             </svg>
           </div>
           <div className={styles.brandTitleGroup}>
-            <span className={styles.logoText}>ClimateControl <span className={styles.accentText}>India</span></span>
-            <span className={styles.logoTag}>HVAC & Environmental Portal</span>
+            <span className={styles.logoText}>Climate Control System <span className={styles.accentText}>India</span></span>
           </div>
         </div>
 
