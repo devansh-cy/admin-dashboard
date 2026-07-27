@@ -4,92 +4,133 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-off);
+  background: radial-gradient(circle at 50% 30%, #0F172A 0%, #0A1120 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 87, 184, 0.25) 0%, rgba(0, 163, 224, 0) 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .loginBox {
   width: 100%;
   max-width: 420px;
   padding: 40px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg-white);
-  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 10;
 }
 
 .logoContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 .logoIcon {
-  width: 36px;
-  height: 36px;
-  background: var(--primary);
-  border-radius: var(--radius-sm);
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-weight: 800;
-  font-size: 16px;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 87, 184, 0.4);
+  flex-shrink: 0;
+}
+
+.brandTitleGroup {
+  display: flex;
+  flex-direction: column;
 }
 
 .logoText {
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--text-dark);
+  font-weight: 800;
+  font-size: 18px;
+  color: #FFFFFF;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
 }
 
-.logoText span {
-  color: var(--primary);
+.accentText {
+  color: var(--accent);
+}
+
+.logoTag {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
 }
 
 .subtitle {
-  text-align: center;
-  margin: 0 0 30px 0;
-  font-size: 14px;
+  text-align: left;
+  margin: 0 0 24px 0;
+  font-size: 13.5px;
   font-weight: 600;
-  color: var(--text-medium);
+  color: #94A3B8;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .loginBox form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
 }
 
 .input {
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg-white);
-  font-size: 14px;
-  color: var(--text-dark);
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 13.5px;
+  color: #FFFFFF;
+  transition: var(--transition);
+}
+
+.input::placeholder {
+  color: #64748B;
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(0, 163, 224, 0.2);
 }
 
 .submitButton {
-  padding: 12px;
-  background: var(--primary);
-  color: #ffffff;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--primary) 0%, #004494 100%);
+  color: #FFFFFF;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: var(--transition);
+  margin-top: 6px;
+  box-shadow: 0 4px 14px rgba(0, 87, 184, 0.35);
 }
 
 .submitButton:hover:not(:disabled) {
-  background: var(--primary-dark);
+  background: linear-gradient(135deg, #0066D6 0%, var(--primary) 100%);
+  transform: translateY(-1px);
 }
 
 .submitButton:disabled {
@@ -98,27 +139,33 @@
 }
 
 .error {
-  padding: 12px;
-  background: #ffebee;
-  color: #c62828;
-  border: 1px solid #ef5350;
-  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  background: rgba(239, 68, 68, 0.15);
+  color: #FCA5A5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-md);
   margin-bottom: 20px;
   font-size: 13px;
+  font-weight: 600;
 }
 
 .toggle {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 24px;
   font-size: 13px;
-  color: var(--text-medium);
+  color: #94A3B8;
 }
 
 .toggle button {
   background: none;
   border: none;
-  color: var(--primary);
+  color: var(--accent);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.toggle button:hover {
   text-decoration: underline;
 }
+

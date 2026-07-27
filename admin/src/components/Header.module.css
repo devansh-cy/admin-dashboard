@@ -2,63 +2,140 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background: var(--bg-white);
-  border-bottom: 1px solid var(--border);
+  padding: 12px 28px;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+}
+
+.mobileMenuBtn:hover {
+  background: var(--bg-hover);
+  color: var(--primary);
 }
 
 .logoLink {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .logoIcon {
-  width: 36px;
-  height: 36px;
-  background: var(--primary);
-  border-radius: var(--radius-sm);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #FFFFFF;
+  box-shadow: 0 4px 10px rgba(0, 87, 184, 0.25);
+  transition: var(--transition);
+}
+
+.logoLink:hover .logoIcon {
+  transform: rotate(-5deg) scale(1.04);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoTitle {
   font-weight: 800;
-  font-size: 16px;
+  font-size: 17px;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+  line-height: 1.2;
 }
 
-.logoText {
+.country {
+  color: var(--accent);
   font-weight: 700;
-  font-size: 18px;
-  color: var(--text-dark);
 }
 
-.logoText span {
-  color: var(--primary);
-}
-
-.adminBadge {
-  background: var(--bg-light);
-  color: var(--text-medium);
-  padding: 4px 10px;
-  border-radius: 100px;
+.logoSubtitle {
   font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+}
+
+.telemetryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-light);
+  border: 1px solid rgba(0, 163, 224, 0.2);
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+}
+
+.pulseDot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--status-converted);
+  border-radius: 50%;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+.telemetryText {
+  font-size: 12px;
   font-weight: 600;
+  color: var(--primary-dark);
 }
 
 .right {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--primary-light);
 }
 
 .userInfo {
@@ -68,24 +145,60 @@
 
 .userName {
   font-size: 13px;
-  color: var(--text-dark);
-  font-weight: 600;
+  color: var(--text-main);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.userRole {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .logoutButton {
-  padding: 8px 16px;
-  background: var(--bg-light);
-  color: var(--text-dark);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
 .logoutButton:hover {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+  background: var(--status-new-bg);
+  color: var(--status-new);
+  border-color: rgba(239, 68, 68, 0.3);
 }
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 16px;
+  }
+
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  .center {
+    display: none;
+  }
+
+  .userRole {
+    display: none;
+  }
+
+  .userName {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+

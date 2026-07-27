@@ -1,23 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
+  /* Climate Control Brand Colors */
   --primary: #0057B8;
-  --primary-dark: #003D82;
-  --primary-light: #E8F1FB;
+  --primary-hover: #004494;
+  --primary-dark: #0A2540;
+  --primary-light: #EBF3FA;
   --accent: #00A3E0;
-  --text-dark: #1A1A2E;
-  --text-medium: #4A4A68;
-  --text-light: #7A7A96;
-  --bg-white: #FFFFFF;
-  --bg-off: #F7F8FA;
-  --bg-light: #EEF1F5;
-  --border: #E2E5EB;
-  --success: #10B981;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --accent-light: #E6F6FC;
+  --teal: #0D9488;
+  
+  /* Text Colors */
+  --text-main: #0F172A;
+  --text-muted: #475569;
+  --text-light: #94A3B8;
+  --text-white: #FFFFFF;
+
+  /* Backgrounds & Surfaces */
+  --bg-app: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-hover: #F1F5F9;
+  --border-color: #E2E8F0;
+  --border-light: #F1F5F9;
+
+  /* Status Colors */
+  --status-new: #EF4444;
+  --status-new-bg: #FEF2F2;
+  --status-contacted: #3B82F6;
+  --status-contacted-bg: #EFF6FF;
+  --status-quoted: #F59E0B;
+  --status-quoted-bg: #FFFBEB;
+  --status-converted: #10B981;
+  --status-converted-bg: #ECFDF5;
+  --status-closed: #6B7280;
+  --status-closed-bg: #F3F4F6;
+
+  /* Shadows & Elevation */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+
+  /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition: all 0.2s ease-in-out;
 }
 
 * {
@@ -27,11 +58,12 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  color: var(--text-dark);
-  background: var(--bg-off);
-  line-height: 1.6;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  background: var(--bg-app);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -51,14 +83,29 @@ button, input, select, textarea {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-off);
+  background: var(--bg-app);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: var(--radius-sm);
+  background: #CBD5E1;
+  border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-light);
+  background: #94A3B8;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.08); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

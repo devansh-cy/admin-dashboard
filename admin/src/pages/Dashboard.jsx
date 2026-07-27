@@ -1,20 +1,25 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import styles from './Dashboard.module.css';
 
 export default function Dashboard() {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  const navigate = useNavigate();
+
   const [stats, setStats] = useState({
     totalInquiries: 0,
     newInquiries: 0,
     products: 0,
-    closedInquiries: 0
+    closedInquiries: 0,
+    quotedInquiries: 0
   });
 
   const [recentInquiries, setRecentInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -43,16 +48,18 @@ export default function Dashboard() {
       // Calculate stats
       const newCount = allInquiries.filter(i => i.status === 'new').length;
       const closedCount = allInquiries.filter(i => i.status === 'closed').length;
+      const quotedCount = allInquiries.filter(i => i.status === 'quoted' || i.status === 'converted').length;
 
       setStats({
         totalInquiries: allInquiries.length,
         newInquiries: newCount,
         products: allProducts.length,
-        closedInquiries: closedCount
+        closedInquiries: closedCount,
+        quotedInquiries: quotedCount
       });
 
-      // Set recent inquiries (last 5)
-      setRecentInquiries(allInquiries.slice(0, 5));
+      // Set recent inquiries (last 6)
+      setRecentInquiries(allInquiries.slice(0, 6));
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
     } finally {
@@ -62,91 +69,184 @@ export default function Dashboard() {
 
   const getTypeLabel = (type) => {
     const map = {
-      product: 'Product',
-      service: 'Service',
-      general: 'General'
+      product: 'Product Inquiry',
+      service: 'Service & Maintenance',
+      general: 'General Info'
     };
     return map[type] || type;
   };
 
-  const getStatusColor = (status) => {
-    const map = {
-      new: '#DC3545',
-      contacted: '#FF9800',
-      quoted: '#0056B3',
-      converted: '#28A745',
-      closed: '#999999'
+  const getStatusBadge = (status) => {
+    const statusMap = {
+      new: { label: 'New', className: styles.statusNew },
+      contacted: { label: 'Contacted', className: styles.statusContacted },
+      quoted: { label: 'Quoted', className: styles.statusQuoted },
+      converted: { label: 'Converted', className: styles.statusConverted },
+      closed: { label: 'Closed', className: styles.statusClosed }
     };
-    return map[status] || '#000000';
+    const item = statusMap[status] || { label: status, className: styles.statusDefault };
+    return <span className={`${styles.statusBadge} ${item.className}`}>{item.label}</span>;
   };
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header toggleMobileSidebar={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
       <div className={styles.main}>
-        <Sidebar />
+        <Sidebar
+          mobileOpen={mobileSidebarOpen}
+          closeMobileSidebar={() => setMobileSidebarOpen(false)}
+        />
         <div className={styles.content}>
-          <h1>Dashboard</h1>
+          {/* Welcome Banner */}
+          <div className={styles.welcomeBanner}>
+            <div>
+              <h1 className={styles.greeting}>Welcome back, {user?.name || 'Admin'} 👋</h1>
+              <p className={styles.subheading}>Here is your HVAC telemetry and inquiry overview for today.</p>
+            </div>
+            <div className={styles.bannerActions}>
+              <button onClick={() => navigate('/products/new')} className={styles.primaryBtn}>
+                + Add HVAC Product
+              </button>
+              <button onClick={() => navigate('/inquiries')} className={styles.secondaryBtn}>
+                View All Inquiries
+              </button>
+            </div>
+          </div>
 
           {/* Stats Cards */}
           <div className={styles.statsGrid}>
             <div className={styles.statCard}>
+              <div className={styles.statTop}>
+                <span className={styles.statLabel}>Total Inquiries</span>
+                <div className={`${styles.statIcon} ${styles.iconBlue}`}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </div>
+              </div>
               <div className={styles.statNumber}>{stats.totalInquiries}</div>
-              <div className={styles.statLabel}>Total Inquiries</div>
+              <div className={styles.statFooter}>
+                <span className={styles.trendUp}>↑ Active Inbound</span>
+              </div>
             </div>
 
             <div className={styles.statCard}>
+              <div className={styles.statTop}>
+                <span className={styles.statLabel}>New / Pending</span>
+                <div className={`${styles.statIcon} ${styles.iconRed}`}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                </div>
+              </div>
               <div className={styles.statNumber}>{stats.newInquiries}</div>
-              <div className={styles.statLabel}>New Inquiries</div>
+              <div className={styles.statFooter}>
+                <span className={styles.urgentBadge}>Requires Response</span>
+              </div>
             </div>
 
             <div className={styles.statCard}>
+              <div className={styles.statTop}>
+                <span className={styles.statLabel}>HVAC Products</span>
+                <div className={`${styles.statIcon} ${styles.iconTeal}`}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  </svg>
+                </div>
+              </div>
               <div className={styles.statNumber}>{stats.products}</div>
-              <div className={styles.statLabel}>Products</div>
+              <div className={styles.statFooter}>
+                <span className={styles.trendNeutral}>In Catalog</span>
+              </div>
             </div>
 
             <div className={styles.statCard}>
-              <div className={styles.statNumber}>{stats.closedInquiries}</div>
-              <div className={styles.statLabel}>Closed</div>
+              <div className={styles.statTop}>
+                <span className={styles.statLabel}>Quoted / Converted</span>
+                <div className={`${styles.statIcon} ${styles.iconGreen}`}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div className={styles.statNumber}>{stats.quotedInquiries}</div>
+              <div className={styles.statFooter}>
+                <span className={styles.trendUp}>Success Rate</span>
+              </div>
             </div>
           </div>
 
-          {/* Recent Inquiries */}
-          <div className={styles.section}>
-            <h2>Recent Inquiries</h2>
+          {/* Recent Inquiries Table */}
+          <div className={styles.sectionCard}>
+            <div className={styles.sectionHeader}>
+              <div>
+                <h2>Recent Customer Inquiries</h2>
+                <p className={styles.sectionSub}>Latest environmental & HVAC customer communications</p>
+              </div>
+              <button onClick={() => navigate('/inquiries')} className={styles.linkBtn}>
+                View All →
+              </button>
+            </div>
 
             {loading ? (
-              <p>Loading...</p>
+              <div className={styles.loadingState}>
+                <div className={styles.spinner}></div>
+                <p>Syncing recent inquiry logs...</p>
+              </div>
             ) : recentInquiries.length === 0 ? (
-              <p>No inquiries yet</p>
+              <div className={styles.emptyState}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" strokeWidth="1.5">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <p>No inquiries recorded yet.</p>
+              </div>
             ) : (
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Customer</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentInquiries.map(inquiry => (
-                    <tr key={inquiry._id}>
-                      <td>{inquiry.customerName}</td>
-                      <td>{getTypeLabel(inquiry.type)}</td>
-                      <td>
-                        <span
-                          className={styles.status}
-                          style={{ color: getStatusColor(inquiry.status) }}
-                        >
-                          {inquiry.status}
-                        </span>
-                      </td>
-                      <td>{new Date(inquiry.createdAt).toLocaleDateString()}</td>
+              <div className={styles.tableResponsive}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>Category</th>
+                      <th>Status</th>
+                      <th>Received Date</th>
+                      <th style={{ textAlign: 'right' }}>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {recentInquiries.map(inquiry => (
+                      <tr key={inquiry._id}>
+                        <td>
+                          <div className={styles.customerCell}>
+                            <span className={styles.customerName}>{inquiry.customerName}</span>
+                            <span className={styles.customerEmail}>{inquiry.email}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span className={styles.typeTag}>{getTypeLabel(inquiry.type)}</span>
+                        </td>
+                        <td>{getStatusBadge(inquiry.status)}</td>
+                        <td className={styles.dateCell}>
+                          {new Date(inquiry.createdAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <button
+                            onClick={() => navigate(`/inquiries/${inquiry._id}`)}
+                            className={styles.actionBtn}
+                          >
+                            Details
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>
@@ -154,3 +254,4 @@ export default function Dashboard() {
     </div>
   );
 }
+

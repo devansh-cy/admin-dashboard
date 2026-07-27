@@ -44,12 +44,22 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.bgGlow}></div>
       <div className={styles.loginBox}>
         <div className={styles.logoContainer}>
-          <div className={styles.logoIcon}>C</div>
-          <span className={styles.logoText}>ClimateControl <span>India</span></span>
+          <div className={styles.logoIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              <circle cx="12" cy="12" r="9" strokeOpacity="0.3" />
+            </svg>
+          </div>
+          <div className={styles.brandTitleGroup}>
+            <span className={styles.logoText}>ClimateControl <span className={styles.accentText}>India</span></span>
+            <span className={styles.logoTag}>HVAC & Environmental Portal</span>
+          </div>
         </div>
-        <p className={styles.subtitle}>{isRegister ? 'Create Admin Account' : 'Admin Login'}</p>
+
+        <p className={styles.subtitle}>{isRegister ? 'Register Administrator Account' : 'Sign in to Admin Dashboard'}</p>
 
         {error && <div className={styles.error}>{error}</div>}
 
@@ -67,7 +77,7 @@ export default function LoginPage() {
 
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Admin Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={styles.input}
@@ -84,12 +94,12 @@ export default function LoginPage() {
           />
 
           <button type="submit" disabled={loading} className={styles.submitButton}>
-            {loading ? 'Processing...' : isRegister ? 'Register' : 'Login'}
+            {loading ? 'Authenticating...' : isRegister ? 'Register Account' : 'Sign In'}
           </button>
         </form>
 
         <p className={styles.toggle}>
-          {isRegister ? 'Already have account? ' : 'No account? '}
+          {isRegister ? 'Already registered? ' : 'Need administrator access? '}
           <button
             type="button"
             onClick={() => {
@@ -97,10 +107,11 @@ export default function LoginPage() {
               setError(null);
             }}
           >
-            {isRegister ? 'Login' : 'Register'}
+            {isRegister ? 'Sign In' : 'Register Account'}
           </button>
         </p>
       </div>
     </div>
   );
 }
+

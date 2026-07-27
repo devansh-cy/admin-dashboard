@@ -1,88 +1,143 @@
 .sidebar {
-  width: 220px;
-  background: var(--bg-white);
-  border-right: 1px solid var(--border);
-  padding: 20px 0;
+  width: 240px;
+  background: #FFFFFF;
+  border-right: 1px solid var(--border-color);
+  padding: 24px 0 20px 0;
   position: fixed;
   left: 0;
-  top: 68px;
+  top: 65px;
   bottom: 0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 90;
+  transition: var(--transition);
+}
+
+.sectionHeader {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-light);
+  letter-spacing: 0.8px;
+  padding: 0 20px 10px 20px;
 }
 
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 0 10px;
+  gap: 4px;
+  padding: 0 12px;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 15px;
-  color: var(--text-medium);
+  gap: 12px;
+  padding: 10px 14px;
+  color: var(--text-muted);
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
   position: relative;
 }
 
+.navIcon {
+  color: var(--text-light);
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
 .navItem:hover {
-  background: var(--bg-off);
+  background: var(--bg-hover);
   color: var(--primary);
+}
+
+.navItem:hover .navIcon {
+  color: var(--primary);
+  transform: translateX(2px);
 }
 
 .navItem.active {
   background: var(--primary-light);
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.navItem.active .navIcon {
+  color: var(--primary);
 }
 
 .badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
+  min-width: 20px;
   height: 20px;
-  background: #DC3545;
-  color: #ffffff;
-  border-radius: 50%;
+  padding: 0 6px;
+  background: var(--status-new);
+  color: #FFFFFF;
+  border-radius: var(--radius-full);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   margin-left: auto;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+.sidebarFooter {
+  padding: 16px 14px;
+}
+
+.hvacStatusCard {
+  background: linear-gradient(135deg, #F8FAFC 0%, var(--primary-light) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+
+.hvacStatusHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 4px;
+}
+
+.hvacStatusDesc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.backdrop {
+  display: none;
 }
 
 @media (max-width: 768px) {
   .sidebar {
-    width: 70px;
-    padding: 10px 0;
+    transform: translateX(-100%);
+    width: 260px;
   }
 
-  .nav {
-    padding: 0 5px;
+  .sidebar.mobileOpen {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
   }
 
-  .navItem {
-    padding: 12px;
-    justify-content: center;
-    font-size: 0;
-  }
-
-  .navItem::before {
-    content: attr(data-label);
-    display: none;
-  }
-
-  .badge {
-    position: absolute;
-    top: 0;
+  .backdrop {
+    display: block;
+    position: fixed;
+    top: 65px;
+    left: 0;
     right: 0;
-    width: 16px;
-    height: 16px;
-    font-size: 10px;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 85;
   }
 }
+

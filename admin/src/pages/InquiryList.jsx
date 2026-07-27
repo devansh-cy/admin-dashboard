@@ -14,6 +14,7 @@ export default function InquiryList() {
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('');
   const [type, setType] = useState('');
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -50,121 +51,165 @@ export default function InquiryList() {
 
   const getTypeLabel = (type) => {
     const map = {
-      product: 'Product',
-      service: 'Service',
-      general: 'General'
+      product: 'Product Inquiry',
+      service: 'Service & Maint.',
+      general: 'General Info'
     };
     return map[type] || type;
   };
 
-  const getStatusColor = (status) => {
-    const map = {
-      new: '#DC3545',
-      contacted: '#FF9800',
-      quoted: '#0056B3',
-      converted: '#28A745',
-      closed: '#999999'
+  const getStatusBadge = (statusStr) => {
+    const statusMap = {
+      new: { label: 'New', className: styles.statusNew },
+      contacted: { label: 'Contacted', className: styles.statusContacted },
+      quoted: { label: 'Quoted', className: styles.statusQuoted },
+      converted: { label: 'Converted', className: styles.statusConverted },
+      closed: { label: 'Closed', className: styles.statusClosed }
     };
-    return map[status] || '#000000';
+    const item = statusMap[statusStr] || { label: statusStr, className: styles.statusDefault };
+    return <span className={`${styles.statusBadge} ${item.className}`}>{item.label}</span>;
   };
+
+  const statusOptions = [
+    { id: '', label: 'All Inquiries' },
+    { id: 'new', label: 'New' },
+    { id: 'contacted', label: 'Contacted' },
+    { id: 'quoted', label: 'Quoted' },
+    { id: 'converted', label: 'Converted' },
+    { id: 'closed', label: 'Closed' }
+  ];
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header toggleMobileSidebar={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
       <div className={styles.main}>
-        <Sidebar />
+        <Sidebar
+          mobileOpen={mobileSidebarOpen}
+          closeMobileSidebar={() => setMobileSidebarOpen(false)}
+        />
         <div className={styles.content}>
+          {/* Header Row */}
           <div className={styles.headerRow}>
-            <h1>Inquiries</h1>
+            <div>
+              <h1 className={styles.pageTitle}>Customer Inquiries</h1>
+              <p className={styles.pageSubtitle}>Manage inbound quotes, service requests, and customer questions</p>
+            </div>
           </div>
 
-          {/* Filters Form */}
+          {/* Quick Filter Status Tabs */}
+          <div className={styles.statusTabs}>
+            {statusOptions.map(opt => (
+              <button
+                key={opt.id}
+                onClick={() => setStatus(opt.id)}
+                className={`${styles.tabBtn} ${status === opt.id ? styles.tabActive : ''}`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Filters Bar */}
           <div className={styles.filtersBar}>
             <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
-              <input
-                type="text"
-                placeholder="Search name, email, message..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className={styles.searchInput}
-              />
+              <div className={styles.searchWrapper}>
+                <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search customer name, email, or message..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className={styles.searchInput}
+                />
+                {search && (
+                  <button type="button" onClick={() => { setSearch(''); fetchInquiries(); }} className={styles.clearSearchBtn}>
+                    ✕
+                  </button>
+                )}
+              </div>
               <button type="submit" className={styles.searchButton}>Search</button>
             </form>
 
             <div className={styles.selectGroup}>
               <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className={styles.select}
-              >
-                <option value="">All Statuses</option>
-                <option value="new">New</option>
-                <option value="contacted">Contacted</option>
-                <option value="quoted">Quoted</option>
-                <option value="converted">Converted</option>
-                <option value="closed">Closed</option>
-              </select>
-
-              <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
                 className={styles.select}
               >
-                <option value="">All Types</option>
-                <option value="product">Product</option>
-                <option value="service">Service</option>
-                <option value="general">General</option>
+                <option value="">All Categories</option>
+                <option value="product">Product Inquiries</option>
+                <option value="service">Service & Maintenance</option>
+                <option value="general">General Inquiries</option>
               </select>
             </div>
           </div>
 
           {/* Inquiry Table */}
           {loading ? (
-            <p>Loading inquiries...</p>
+            <div className={styles.loadingState}>
+              <div className={styles.spinner}></div>
+              <p>Fetching inquiry database...</p>
+            </div>
           ) : inquiries.length === 0 ? (
-            <p>No inquiries found</p>
+            <div className={styles.emptyState}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" strokeWidth="1.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <p>No matching customer inquiries found.</p>
+            </div>
           ) : (
-            <div className={styles.tableContainer}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Customer Name</th>
-                    <th>Email</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Date Submitted</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {inquiries.map((inquiry) => (
-                    <tr key={inquiry._id} className={!inquiry.isRead ? styles.unreadRow : ''}>
-                      <td>
-                        {inquiry.customerName} {!inquiry.isRead && <span className={styles.unreadMarker}>NEW</span>}
-                      </td>
-                      <td>{inquiry.email}</td>
-                      <td>{getTypeLabel(inquiry.type)}</td>
-                      <td>
-                        <span
-                          className={styles.status}
-                          style={{ color: getStatusColor(inquiry.status) }}
-                        >
-                          {inquiry.status}
-                        </span>
-                      </td>
-                      <td>{new Date(inquiry.createdAt).toLocaleDateString()}</td>
-                      <td>
-                        <button
-                          onClick={() => navigate(`/inquiries/${inquiry._id}`)}
-                          className={styles.viewButton}
-                        >
-                          View Details
-                        </button>
-                      </td>
+            <div className={styles.tableCard}>
+              <div className={styles.tableResponsive}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Category</th>
+                      <th>Status</th>
+                      <th>Date Received</th>
+                      <th style={{ textAlign: 'right' }}>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {inquiries.map((inquiry) => (
+                      <tr key={inquiry._id} className={!inquiry.isRead ? styles.unreadRow : ''}>
+                        <td>
+                          <div className={styles.customerCell}>
+                            <div className={styles.customerHeader}>
+                              <span className={styles.customerName}>{inquiry.customerName}</span>
+                              {!inquiry.isRead && <span className={styles.unreadTag}>NEW</span>}
+                            </div>
+                            <span className={styles.customerEmail}>{inquiry.email} {inquiry.phone ? `• ${inquiry.phone}` : ''}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span className={styles.typeTag}>{getTypeLabel(inquiry.type)}</span>
+                        </td>
+                        <td>{getStatusBadge(inquiry.status)}</td>
+                        <td className={styles.dateCell}>
+                          {new Date(inquiry.createdAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <button
+                            onClick={() => navigate(`/inquiries/${inquiry._id}`)}
+                            className={styles.viewButton}
+                          >
+                            View Details
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>
@@ -172,3 +217,4 @@ export default function InquiryList() {
     </div>
   );
 }
+

@@ -185,153 +185,166 @@ export default function ProductForm() {
     );
   }
 
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
   return (
     <div className={styles.container}>
-      <Header />
+      <Header toggleMobileSidebar={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
       <div className={styles.main}>
-        <Sidebar />
+        <Sidebar mobileOpen={mobileSidebarOpen} closeMobileSidebar={() => setMobileSidebarOpen(false)} />
         <div className={styles.content}>
-          <div className={styles.headerRow}>
-            <button onClick={() => navigate('/products')} className={styles.backButton}>
-              ← Back to Products
-            </button>
-          </div>
-
-          <h1>{isEditMode ? 'Edit Product' : 'Add New Product'}</h1>
-
-          {error && <div className={styles.errorAlert}>{error}</div>}
-
           <div className={styles.formCard}>
-            <form onSubmit={handleSubmit} className={styles.form}>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Product Name *</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className={styles.input}
-                  required
-                />
-              </div>
+            <div className={styles.headerRow}>
+              <h1>{isEditMode ? 'Edit HVAC Product' : 'Add New HVAC Product'}</h1>
+              <button
+                type="button"
+                onClick={() => navigate('/products')}
+                className={styles.backButton}
+              >
+                ← Back to Products
+              </button>
+            </div>
 
-              <div className={styles.row}>
+            {error && <div className={styles.errorAlert}>{error}</div>}
+
+            <form onSubmit={handleSubmit} className={styles.form}>
+              {/* Basic Info Section */}
+              <div className={styles.section}>
+                <h2>Basic Details</h2>
+                
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>Category *</label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className={styles.select}
+                  <label className={styles.label}>Product Name *</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className={styles.input}
+                    placeholder="e.g. Precision Air Conditioner 5TR"
                     required
-                  >
-                    <option value="">Select Category</option>
-                    <option value="Panel AC">Panel AC</option>
-                    <option value="Chiller">Chiller</option>
-                    <option value="Air Dryer">Air Dryer</option>
-                    <option value="Dehumidifier">Dehumidifier</option>
-                    <option value="Fan Tray">Fan Tray</option>
-                  </select>
+                  />
+                </div>
+
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>Category *</label>
+                    <input
+                      type="text"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className={styles.input}
+                      placeholder="e.g. Air Conditioners, Chillers, AHUs"
+                      required
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>Price (₹) *</label>
+                    <input
+                      type="number"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                      className={styles.input}
+                      placeholder="e.g. 150000"
+                      min="0"
+                      step="any"
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>Price (₹) *</label>
-                  <input
-                    type="number"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    className={styles.input}
-                    required
+                  <label className={styles.label}>Description</label>
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className={styles.textarea}
+                    placeholder="Detailed HVAC unit description and specifications..."
+                    rows={4}
                   />
                 </div>
               </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Description</label>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className={styles.textarea}
-                  rows={4}
-                />
+              {/* Images Section */}
+              <div className={styles.section}>
+                <h2>Media & 360° Views</h2>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>Image URLs (Comma Separated)</label>
+                  <textarea
+                    value={imagesInput}
+                    onChange={(e) => setImagesInput(e.target.value)}
+                    className={styles.textarea}
+                    placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
+                    rows={2}
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>360° Image Frame URLs (Comma Separated)</label>
+                  <textarea
+                    value={threeSixtyInput}
+                    onChange={(e) => setThreeSixtyInput(e.target.value)}
+                    className={styles.textarea}
+                    placeholder="https://example.com/frame1.jpg, https://example.com/frame2.jpg"
+                    rows={2}
+                  />
+                </div>
               </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Images (URLs, comma-separated)</label>
-                <input
-                  type="text"
-                  value={imagesInput}
-                  onChange={(e) => setImagesInput(e.target.value)}
-                  className={styles.input}
-                  placeholder="https://example.com/img1.png, https://example.com/img2.png"
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.label}>360° Images (URLs, comma-separated)</label>
-                <input
-                  type="text"
-                  value={threeSixtyInput}
-                  onChange={(e) => setThreeSixtyInput(e.target.value)}
-                  className={styles.input}
-                  placeholder="https://example.com/frame1.png, https://example.com/frame2.png"
-                />
-                <p className={styles.helpText}>Provide ordered list of image URLs for 360-degree rotation view.</p>
-              </div>
-
-              {/* Technical Specifications Section */}
-              <div className={styles.specsWrapper}>
-                <div 
-                  className={styles.specsToggleHeader} 
-                  onClick={() => setShowSpecs(!showSpecs)}
-                >
-                  <span>Technical Specifications (Optional)</span>
-                  <span className={styles.toggleIcon}>{showSpecs ? '▲' : '▼'}</span>
+              {/* Specifications Collapsible Section */}
+              <div className={styles.section}>
+                <div className={styles.specsHeader} onClick={() => setShowSpecs(!showSpecs)}>
+                  <h2>Technical HVAC Specifications</h2>
+                  <button type="button" className={styles.toggleBtn}>
+                    {showSpecs ? '▲ Hide Specs' : '▼ Expand Specs'}
+                  </button>
                 </div>
 
                 {showSpecs && (
                   <div className={styles.specsGrid}>
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Cooling Capacity (kW/W)</label>
+                      <label className={styles.label}>Cooling Capacity (kW)</label>
                       <input
                         type="number"
                         step="any"
                         value={coolingCapacity}
                         onChange={(e) => setCoolingCapacity(e.target.value)}
                         className={styles.input}
-                        placeholder="e.g. 1.2"
+                        placeholder="e.g. 17.5"
                       />
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Power Consumption (W)</label>
+                      <label className={styles.label}>Power Consumption (kW)</label>
                       <input
                         type="number"
                         step="any"
                         value={power}
                         onChange={(e) => setPower(e.target.value)}
                         className={styles.input}
-                        placeholder="e.g. 800"
+                        placeholder="e.g. 4.2"
                       />
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Refrigerant</label>
+                      <label className={styles.label}>Refrigerant Type</label>
                       <input
                         type="text"
                         value={refrigerant}
                         onChange={(e) => setRefrigerant(e.target.value)}
                         className={styles.input}
-                        placeholder="e.g. R134a"
+                        placeholder="e.g. R410A / R32"
                       />
                     </div>
 
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Dimensions (W x D x H mm)</label>
+                      <label className={styles.label}>Dimensions (L × W × H)</label>
                       <input
                         type="text"
                         value={dimensions}
                         onChange={(e) => setDimensions(e.target.value)}
                         className={styles.input}
-                        placeholder="e.g. 400x300x800"
+                        placeholder="e.g. 900 x 350 x 1200 mm"
                       />
                     </div>
 
@@ -343,7 +356,7 @@ export default function ProductForm() {
                         value={weight}
                         onChange={(e) => setWeight(e.target.value)}
                         className={styles.input}
-                        placeholder="e.g. 35"
+                        placeholder="e.g. 85"
                       />
                     </div>
 
@@ -419,7 +432,7 @@ export default function ProductForm() {
 
               <div className={styles.actions}>
                 <button type="submit" disabled={loading} className={styles.submitButton}>
-                  {loading ? 'Saving...' : 'Save Product'}
+                  {loading ? 'Saving...' : 'Save HVAC Product'}
                 </button>
                 <button
                   type="button"
