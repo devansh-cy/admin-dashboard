@@ -103,37 +103,17 @@ export default function InquiryList() {
             </div>
           </div>
 
-          {/* Quick Filter Status & Category Tabs */}
-          <div className={styles.filterTabsContainer}>
-            <div className={styles.tabGroup}>
-              <span className={styles.tabGroupLabel}>Status:</span>
-              <div className={styles.statusTabs}>
-                {statusOptions.map(opt => (
-                  <button
-                    key={opt.id}
-                    onClick={() => setStatus(opt.id)}
-                    className={`${styles.tabBtn} ${status === opt.id ? styles.tabActive : ''}`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.tabGroup}>
-              <span className={styles.tabGroupLabel}>Category:</span>
-              <div className={styles.statusTabs}>
-                {categoryOptions.map(opt => (
-                  <button
-                    key={opt.id}
-                    onClick={() => setType(opt.id)}
-                    className={`${styles.tabBtn} ${type === opt.id ? styles.categoryTabActive : ''}`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+          {/* Quick Filter Status Tabs */}
+          <div className={styles.statusTabs}>
+            {statusOptions.map(opt => (
+              <button
+                key={opt.id}
+                onClick={() => setStatus(opt.id)}
+                className={`${styles.tabBtn} ${status === opt.id ? styles.tabActive : ''}`}
+              >
+                {opt.label}
+              </button>
+            ))}
           </div>
 
           {/* Filters Bar */}
