@@ -216,7 +216,11 @@ export default function Dashboard() {
                   </thead>
                   <tbody>
                     {recentInquiries.map(inquiry => (
-                      <tr key={inquiry._id}>
+                      <tr
+                        key={inquiry._id}
+                        onClick={() => navigate(`/inquiries/${inquiry._id}`)}
+                        className={styles.tableRow}
+                      >
                         <td>
                           <div className={styles.customerCell}>
                             <span className={styles.customerName}>{inquiry.customerName}</span>
@@ -236,7 +240,10 @@ export default function Dashboard() {
                         </td>
                         <td style={{ textAlign: 'right' }}>
                           <button
-                            onClick={() => navigate(`/inquiries/${inquiry._id}`)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/inquiries/${inquiry._id}`);
+                            }}
                             className={styles.actionBtn}
                           >
                             Details

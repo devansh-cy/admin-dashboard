@@ -220,8 +220,13 @@
   border-bottom: none;
 }
 
+.table tbody tr {
+  cursor: pointer;
+  transition: var(--transition);
+}
+
 .table tr:hover td {
-  background: #F8FAFC;
+  background: #F1F5F9;
 }
 
 .unreadRow td {

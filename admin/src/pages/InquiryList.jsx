@@ -176,7 +176,11 @@ export default function InquiryList() {
                   </thead>
                   <tbody>
                     {inquiries.map((inquiry) => (
-                      <tr key={inquiry._id} className={!inquiry.isRead ? styles.unreadRow : ''}>
+                      <tr
+                        key={inquiry._id}
+                        onClick={() => navigate(`/inquiries/${inquiry._id}`)}
+                        className={`${styles.tableRow} ${!inquiry.isRead ? styles.unreadRow : ''}`}
+                      >
                         <td>
                           <div className={styles.customerCell}>
                             <div className={styles.customerHeader}>
@@ -199,7 +203,10 @@ export default function InquiryList() {
                         </td>
                         <td style={{ textAlign: 'right' }}>
                           <button
-                            onClick={() => navigate(`/inquiries/${inquiry._id}`)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/inquiries/${inquiry._id}`);
+                            }}
                             className={styles.viewButton}
                           >
                             View Details
