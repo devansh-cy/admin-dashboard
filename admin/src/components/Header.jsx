@@ -43,13 +43,6 @@ export default function Header({ toggleMobileSidebar }) {
         </Link>
       </div>
 
-      <div className={styles.center}>
-        <div className={styles.telemetryBadge}>
-          <span className={styles.pulseDot}></span>
-          <span className={styles.telemetryText}>Telemetry System Online</span>
-        </div>
-      </div>
-
       <div className={styles.right}>
         <div className={styles.userProfile}>
           <div className={styles.avatar}>{getUserInitial()}</div>

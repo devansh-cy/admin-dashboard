@@ -81,34 +81,7 @@
   letter-spacing: 0.2px;
 }
 
-.center {
-  display: flex;
-  align-items: center;
-}
 
-.telemetryBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--accent-light);
-  border: 1px solid rgba(0, 163, 224, 0.2);
-  padding: 5px 14px;
-  border-radius: var(--radius-full);
-}
-
-.pulseDot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--status-converted);
-  border-radius: 50%;
-  animation: pulseGlow 2s infinite ease-in-out;
-}
-
-.telemetryText {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--primary-dark);
-}
 
 .right {
   display: flex;
