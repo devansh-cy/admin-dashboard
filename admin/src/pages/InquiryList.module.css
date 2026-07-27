@@ -47,12 +47,35 @@
   margin: 0;
 }
 
+.filterTabsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+}
+
+.tabGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.tabGroupLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  min-width: 68px;
+  flex-shrink: 0;
+}
+
 .statusTabs {
   display: flex;
   align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid var(--border-color);
-  padding: 4px 0 16px 0;
+  gap: 8px;
   overflow-x: auto;
 }
 
@@ -60,7 +83,7 @@
   background: #FFFFFF;
   border: 1px solid var(--border-color);
   color: var(--text-muted);
-  padding: 8px 16px;
+  padding: 7px 15px;
   border-radius: var(--radius-full);
   font-size: 12.5px;
   font-weight: 600;
@@ -79,6 +102,13 @@
   color: #FFFFFF;
   border-color: var(--primary);
   box-shadow: 0 2px 8px rgba(0, 87, 184, 0.25);
+}
+
+.categoryTabActive {
+  background: var(--accent-dark, #0088BC);
+  color: #FFFFFF;
+  border-color: var(--accent-dark, #0088BC);
+  box-shadow: 0 2px 8px rgba(0, 136, 188, 0.25);
 }
 
 .filtersBar {
