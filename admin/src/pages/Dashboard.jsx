@@ -99,13 +99,13 @@ export default function Dashboard() {
         <div className={styles.content}>
           {/* Welcome Banner */}
           <div className={styles.welcomeBanner}>
-            <div>
+            <div className={styles.bannerContent}>
               <h1 className={styles.greeting}>Welcome back, {user?.name || 'Admin'} 👋</h1>
-              <p className={styles.subheading}>Here is your HVAC telemetry and inquiry overview for today.</p>
+              <p className={styles.subheading}>Here is your inquiry and catalog overview for today.</p>
             </div>
             <div className={styles.bannerActions}>
               <button onClick={() => navigate('/products/new')} className={styles.primaryBtn}>
-                + Add HVAC Product
+                + Add Product
               </button>
               <button onClick={() => navigate('/inquiries')} className={styles.secondaryBtn}>
                 View All Inquiries
@@ -149,7 +149,7 @@ export default function Dashboard() {
 
             <div className={styles.statCard}>
               <div className={styles.statTop}>
-                <span className={styles.statLabel}>HVAC Products</span>
+                <span className={styles.statLabel}>Products</span>
                 <div className={`${styles.statIcon} ${styles.iconTeal}`}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
